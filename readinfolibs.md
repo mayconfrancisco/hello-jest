@@ -36,3 +36,4 @@ para setar o NODE_ENV como testes vá ao package.json e altere o script test par
 "posttest": "NODE_ENV=test sequelize db:migrate:undo:all" //para apagar todas as migrate depois do testes <br/>
 
 
+yarn add supertest -D //lib que da um suporte melhor a requisicoes http para os testes
