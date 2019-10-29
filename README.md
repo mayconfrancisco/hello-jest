@@ -1,6 +1,6 @@
 # Hello Jest - NodeTests
 Projeto com alguns testes utilizando o JEST para testes unitários e de integração <br/>
-SQLite como base de dados para rodas os testes de integração <br/>
+SQLite como base de dados para rodar os testes de integração <br/>
 Sequelize como ORM do App <br/>
 Express e jsonwebtoken para lidar com requisições HTTP (Rest + JWT) <br/>
 bcryptjs para hash do password do usuário <br/>
