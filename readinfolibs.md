@@ -37,3 +37,6 @@ para setar o NODE_ENV como testes vá ao package.json e altere o script test par
 
 
 yarn add supertest -D //lib que da um suporte melhor a requisicoes http para os testes
+
+
+yarn add factory-girl faker -D //para gerar dados para nossos testes

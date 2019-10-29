@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import request from 'supertest';
 import app from '../../src/app';
 
-import User from '../../src/app/models/User';
+import factory from '../factories';
 import truncate from '../util/truncate';
 
 describe('User', () => {
@@ -15,9 +15,9 @@ describe('User', () => {
   });
 
   it('should encrypt user password when new user created', async () => {
-    const user = await User.create({
-      name: 'Maycon Francisco',
-      email: 'maycon@francisco.com',
+    // o factory vai gerar todos os atributos do usuario automaticamente
+    // estamos sobreescrevendo o password para que consigamos comparar o hash
+    const user = await factory.create('User', {
       password: '123123',
     });
 
@@ -27,33 +27,27 @@ describe('User', () => {
   });
 
   it('should be able to register', async () => {
+    // factory.attrs gera um objeto do model mas sem cria-lo na base de dados
+    // como so estamos testando a rota ela mesma vai criar
+    const user = await factory.attrs('User');
+
     const response = await request(app)
       .post('/users')
-      .send({
-        name: 'Maycon Francisco',
-        email: 'maycon@francisco.com',
-        password: '123123',
-      });
+      .send(user);
 
     expect(response.body).toHaveProperty('id');
   });
 
   it('should not be able to register with duplicated email', async () => {
+    const user = await factory.attrs('User');
+
     await request(app)
       .post('/users')
-      .send({
-        name: 'Maycon Francisco',
-        email: 'maycon@francisco.com',
-        password: '123123',
-      });
+      .send(user);
 
     const response = await request(app)
       .post('/users')
-      .send({
-        name: 'Maycon Francisco',
-        email: 'maycon@francisco.com',
-        password: '123123',
-      });
+      .send(user);
 
     expect(response.status).toBe(400);
   });
